@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
     const [isLoggedIn, setIsloggedin] = useState(true)
     const [errMsg, setErrMsg] = useState("")
-    const navigate =useNavigate()
+    const navigate = useNavigate()
     const name = useRef(null)
     const email = useRef(null)
     const password = useRef(null)
@@ -15,7 +15,7 @@ const Login = () => {
     const submitForm = () => {
         const message = isLoggedIn ? userFormValidate("", email.current.value, password.current.value, "loggedIn") : userFormValidate(name?.current.value, email.current.value, password.current.value, "signUp")
         setErrMsg(message)
-        if (!message) return
+        if (message) return
         if (isLoggedIn) {
             // signin
             signInWithEmailAndPassword(auth, email.current.value, password.current.value)
@@ -31,13 +31,12 @@ const Login = () => {
                 });
         } else {
             // signup
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Signed up 
-                    const user = userCredential.user;
-                    console.log(user)
-                    navigate("/browse")
-                })
+            createUserWithEmailAndPassword(auth, email.current.value, password.current.value).then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                console.log(user)
+                navigate("/browse")
+            })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;

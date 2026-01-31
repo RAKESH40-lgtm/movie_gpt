@@ -20,17 +20,17 @@ const routing = createBrowserRouter([
 const Body = () => {
     const dispatch =useDispatch()
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                
                 const {uid,displayName , email} = user;
                 dispatch(addUser({userId : uid , username : displayName ,email}))
             } else {
                dispatch(removeUser())
             }
         });
-    }, [])
-    return (
+        return () => unsubscribe();
+    }, [])   
+     return (
         <RouterProvider router={routing} />
     )
 }
