@@ -3,11 +3,10 @@ import Header from './Header'
 import { userFormValidate } from '../utils/validate'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
+import { login_src, src_setUrls } from '../utils/constants';
 const Login = () => {
     const [isLoggedIn, setIsloggedin] = useState(true)
     const [errMsg, setErrMsg] = useState("")
-    const navigate = useNavigate()
     const name = useRef(null)
     const email = useRef(null)
     const password = useRef(null)
@@ -15,14 +14,14 @@ const Login = () => {
     const submitForm = () => {
         const message = isLoggedIn ? userFormValidate("", email.current.value, password.current.value, "loggedIn") : userFormValidate(name?.current.value, email.current.value, password.current.value, "signUp")
         setErrMsg(message)
-        if (message) return
+        // if (message) return
         if (isLoggedIn) {
             // signin
             signInWithEmailAndPassword(auth, email.current.value, password.current.value)
                 .then((userCredential) => {
                     const user = userCredential.user;
                     console.log(user)
-                    navigate("/browse")
+                    
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -34,8 +33,7 @@ const Login = () => {
             createUserWithEmailAndPassword(auth, email.current.value, password.current.value).then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
-                console.log(user)
-                navigate("/browse")
+              console.log(user)
             })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -52,8 +50,8 @@ const Login = () => {
             {/* Background Image - responsive sizing */}
             <div className='absolute inset-0 w-full h-full'>
                 <img
-                    src="https://assets.nflxext.com/ffe/siteui/vlv3/cc73e7c7-7860-4ef4-8fc8-1baf24569d2f/web/IN-en-20260126-TRIFECTA-perspective_90d714e8-acc9-4253-ab46-ca6b349c1989_large.jpg"
-                    srcSet="https://assets.nflxext.com/ffe/siteui/vlv3/cc73e7c7-7860-4ef4-8fc8-1baf24569d2f/web/IN-en-20260126-TRIFECTA-perspective_90d714e8-acc9-4253-ab46-ca6b349c1989_large.jpg 2000w, https://assets.nflxext.com/ffe/siteui/vlv3/cc73e7c7-7860-4ef4-8fc8-1baf24569d2f/web/IN-en-20260126-TRIFECTA-perspective_90d714e8-acc9-4253-ab46-ca6b349c1989_medium.jpg 1279w, https://assets.nflxext.com/ffe/siteui/vlv3/cc73e7c7-7860-4ef4-8fc8-1baf24569d2f/web/IN-en-20260126-TRIFECTA-perspective_90d714e8-acc9-4253-ab46-ca6b349c1989_small.jpg 959w"
+                    src={login_src}
+                    srcSet={src_setUrls}
                     alt=""
                     aria-hidden="true"
                     className='w-full h-full object-cover'
