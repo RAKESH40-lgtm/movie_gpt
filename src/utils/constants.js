@@ -12,8 +12,8 @@ export const options = {
   }
 };
 
-export const nowPlaying = "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
+export const nowPlaying = "https://corsproxy.io/?https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1"
 
-export const videoPlay =(id)=>{ return `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`}
+export const videoPlay =(id)=>{ return `https://corsproxy.io/?https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`}
 
 export const IMG_CDN_URL ="https://image.tmdb.org/t/p/w500/"
